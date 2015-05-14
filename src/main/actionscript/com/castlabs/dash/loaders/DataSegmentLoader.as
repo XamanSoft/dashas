@@ -26,7 +26,7 @@ import flash.utils.ByteArray;
 import flash.utils.Timer;
 
 public class DataSegmentLoader extends SegmentLoader {
-    private var _status:int = 0;
+    protected var _status:int = 0;
     private var _http:URLLoader;
 
     private var _countdown:int = 5; // five tries; otherwise error
