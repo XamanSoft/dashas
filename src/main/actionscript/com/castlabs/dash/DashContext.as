@@ -63,14 +63,10 @@ import flash.net.NetConnection;
 import flash.net.NetStream;
 import flash.utils.ByteArray;
 
-import org.osmf.traits.LoadTrait;
-import org.osmf.traits.TimeTrait;
-
 public class DashContext {
     private static var _instance:DashContext;
 
     private static var _console:Console;
-    private static var _dashNetLoader:DashNetLoader;
     private static var _smoothMonitor:SmoothMonitor;
     private static var _bandwidthMonitor:BandwidthMonitor;
     private static var _muxer:Muxer;
@@ -96,14 +92,6 @@ public class DashContext {
         }
 
         return _console;
-    }
-
-    public function get dashNetLoader():DashNetLoader {
-        if (_dashNetLoader == null) {
-            _dashNetLoader = new DashNetLoader(this);
-        }
-
-        return _dashNetLoader;
     }
 
     public function get smoothMonitor():SmoothMonitor {
@@ -171,15 +159,12 @@ public class DashContext {
     }
 
     public function buildDashNetStream(connection:NetConnection):DashNetStream {
-        return new DashNetStream(this, connection);
-    }
-
-    public function buildDashTimeTrait(stream:DashNetStream, duration:Number):DashTimeTrait {
-        return new DashTimeTrait(stream, duration);
-    }
-
-    public function buildDashSeekTrait(temporal:TimeTrait, loadTrait:LoadTrait, netStream:NetStream):DashSeekTrait {
-        return new DashSeekTrait(temporal, loadTrait, netStream);
+        var netStream:DashNetStream = new DashNetStream(this, connection);
+		
+		var smoothMonitor:SmoothMonitor = this.smoothMonitor;
+        smoothMonitor.appendListeners(netStream);
+		
+		return netStream;
     }
 
     public function buildManifestLoader(url:String):ManifestLoader {
