@@ -1,5 +1,7 @@
 <!--[![Build Status](https://travis-ci.org/castlabs/dashas.png?branch=master)](https://travis-ci.org/castlabs/dashas)-->
 
+**This is a modified version of Castlabs DASH.as with only the DASH NetStream support for Video/StageVideo class, OSMF Plugin support removed**
+
 dash.as
 =======
 
@@ -30,13 +32,13 @@ For more information visit [examples page](http://dashas.castlabs.com/demo/try.h
 * Audio-video playback [3];
 * Adaptive bitrate streaming;
 * Live streaming;
-~~* User interface:
-	* Play/Pause;
-	* Seeking;
-	* Fullscreen mode;
-	* Duration;
-	* Loaded bytes indicator;
-	* Buffering indicator;~~
+~~* User interface:~~
+	~~* Play/Pause;~~
+	~~* Seeking;~~
+	~~* Fullscreen mode;~~
+	~~* Duration;~~
+	~~* Loaded bytes indicator;~~
+	~~* Buffering indicator;~~
 
 [1] A server has to have [crossdomain.xml](https://github.com/castlabs/dashas/blob/master/utils/crossdomain.xml) file in the root context.  
 [2] A server has to have custom [.htaccess](https://github.com/castlabs/dashas/blob/master/utils/.htaccess) file in the root context.  
