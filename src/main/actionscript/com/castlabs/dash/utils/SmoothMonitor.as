@@ -12,7 +12,7 @@ import com.castlabs.dash.DashContext;
 import flash.events.EventDispatcher;
 import flash.events.NetStatusEvent;
 
-import org.osmf.net.NetStreamCodes;
+import com.castlabs.dash.utils.NetStreamCodes;
 
 public class SmoothMonitor {
     private static const ACCEPTED_BUFFERING_COUNT:uint = 1;
