@@ -8,9 +8,12 @@
 
 package com.castlabs.dash {
 import com.castlabs.dash.events.FragmentEvent;
+import com.castlabs.dash.events.ManifestEvent;
 import com.castlabs.dash.events.SegmentEvent;
 import com.castlabs.dash.events.StreamEvent;
+import com.castlabs.dash.handlers.ManifestHandler;
 import com.castlabs.dash.loaders.FragmentLoader;
+import com.castlabs.dash.loaders.ManifestLoader;
 
 import flash.events.NetStatusEvent;
 import flash.events.TimerEvent;
@@ -20,7 +23,7 @@ import flash.net.NetStreamAppendBytesAction;
 import flash.utils.ByteArray;
 import flash.utils.Timer;
 
-import org.osmf.net.NetStreamCodes;
+import com.castlabs.dash.utils.NetStreamCodes;
 
 public class DashNetStream extends NetStream {
     private const MIN_BUFFER_TIME:Number = 5;
@@ -79,6 +82,13 @@ public class DashNetStream extends NetStream {
     }
 
     override public function play(...rest):void {
+		if (typeof(rest[0]) == 'string' && rest[0] != '')
+		{
+			loadManifest(rest[0]);
+			updateState(PLAY);
+			return;
+		}
+		
         super.play(null);
 
         appendBytesAction(NetStreamAppendBytesAction.RESET_BEGIN);
@@ -208,10 +218,49 @@ public class DashNetStream extends NetStream {
             return _duration;
         }
     }
+	
+	public function loadManifest(url:String):void
+	{
+		var thisStream:DashNetStream = this;
+        var loader:ManifestLoader = _context.buildManifestLoader(url);
+
+        loader.addEventListener(ManifestEvent.LOADED, onLoad);
+        loader.addEventListener(ManifestEvent.ERROR, onError);
+
+        function onLoad(event:ManifestEvent):void {
+            _context.console.info("Creating manifest...");
+
+            var manifest:ManifestHandler = _context.createManifestHandler(event.url, event.xml);
+            _context.console.info("Created manifest, " + manifest.toString());
+
+            thisStream.init();
+        }
+
+        function onError(event:ManifestEvent):void {
+            /*loadTrait.dispatchEvent(new MediaErrorEvent(MediaErrorEvent.MEDIA_ERROR, false, false,
+                    new MediaError(MediaErrorCodes.MEDIA_LOAD_FAILED)));*/
+        }
+
+        loader.load();
+    }
 
     public function init():void {
         _live = _context.manifestHandler.live;
         _duration = _context.manifestHandler.duration;
+
+		if (client && client.hasOwnProperty('onMetaData'))
+		{
+			client.onMetaData({
+				canSeekToEnd : !_live,
+				videocodecid : 0,
+				framerate : 24,
+				videodatarate : 0,
+				height : 0,
+				width : 0,
+				duration : _duration,
+				dash: true
+			});
+		}
 
         _loader = _context.fragmentLoader;
         _loader.addEventListener(StreamEvent.READY, onReady);
@@ -326,8 +375,15 @@ public class DashNetStream extends NetStream {
     }
 
     private function onReady(event:StreamEvent):void {
-        _state = STOPPED;
-        dispatchEvent(event);
+		if (_state == PLAYING)
+		{
+			play();
+		} else
+		{
+			_state = STOPPED;
+		}
+		
+		dispatchEvent(event);
     }
 
     private function onLoaded(event:FragmentEvent):void {
