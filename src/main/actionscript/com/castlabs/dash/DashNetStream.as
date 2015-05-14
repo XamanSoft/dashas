@@ -124,6 +124,16 @@ public class DashNetStream extends NetStream {
                 break;
         }
     }
+	
+	override public function togglePause(): void {
+		if (time >= _duration)
+			return;
+
+		if (_state == PLAYING)
+			pause();
+		else
+			resume();
+	}
 
     override public function pause():void {
         super.pause();
@@ -148,6 +158,9 @@ public class DashNetStream extends NetStream {
     }
 
     override public function seek(offset:Number):void {
+		if (offset >= MIN_BUFFER_TIME)
+			offset = offset - MIN_BUFFER_TIME - 1;
+
         switch (_state) {
             case PAUSED:
             case SEEKING:
