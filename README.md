@@ -21,7 +21,8 @@ For more information visit [examples page](http://dashas.castlabs.com/demo/try.h
 
 ## Features
 
-* An OSMF extension;
+~~* An OSMF extension;~~
+* Dash NetStream for Video/StageVideo class
 * Basic support for manifests with a list [1];
 * Basic support for manifests with a template [1];
 * Basic support for manifests with a base URL [1][2];
@@ -29,13 +30,13 @@ For more information visit [examples page](http://dashas.castlabs.com/demo/try.h
 * Audio-video playback [3];
 * Adaptive bitrate streaming;
 * Live streaming;
-* User interface:
+~~* User interface:
 	* Play/Pause;
 	* Seeking;
 	* Fullscreen mode;
 	* Duration;
 	* Loaded bytes indicator;
-	* Buffering indicator;
+	* Buffering indicator;~~
 
 [1] A server has to have [crossdomain.xml](https://github.com/castlabs/dashas/blob/master/utils/crossdomain.xml) file in the root context.  
 [2] A server has to have custom [.htaccess](https://github.com/castlabs/dashas/blob/master/utils/.htaccess) file in the root context.  
