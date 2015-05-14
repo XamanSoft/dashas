@@ -36,7 +36,8 @@ public class Console {
             return;
         }
 
-        ExternalInterface.call("handleEvents", events);
+		if (ExternalInterface.available)
+			ExternalInterface.call("handleEvents", events);
 
         while (events.length > 0) {
             events.pop();
