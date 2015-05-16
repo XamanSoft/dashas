@@ -9,9 +9,9 @@ Dash.as plays [MPEG-DASH](http://dashif.org/) video on any device supporting Ado
 
 MPEG-DASH (Dynamic Adaptive Streaming over HTTP) became an [International Standard](http://standards.iso.org/ittf/PubliclyAvailableStandards/c057623_ISO_IEC_23009-1_2012.zip) in 2011 and is a technique designed specifically for streaming high-quality multimedia over an HTTP server. It works by fragmenting content into a series of small HTTP-based file segments where each contains block of playback time. Content is made available at a variety of different bitrates to account for variations in a connection's bandwidth quality. Upon each download of a segment, the highest bitrate the connection can handle in time for seamless playback is selected. This allows MPEG-DASH to seamlessly adapt to changing network conditions at the highest quality possible for a seamless user experience.
 
-This project is an extension for [Open Source Media Framework](http://osmf.org/) and released under the [Mozilla Public License 2.0](http://www.mozilla.org/MPL/2.0/).
+This project is ~~an extension for [Open Source Media Framework](http://osmf.org/) and~~ released under the [Mozilla Public License 2.0](http://www.mozilla.org/MPL/2.0/).
 
-At the same time there is profersional edition of dash.as which integrates nicely with the [Adobe Access DRM](http://www.adobe.com/products/adobe-access.html). For more information please contact with sales department: "sales (at) castlabs (dot) com".
+At the same time there is professional edition of dash.as which integrates nicely with the [Adobe Access DRM](http://www.adobe.com/products/adobe-access.html). For more information please contact with sales department: "sales (at) castlabs (dot) com".
 
 Please visit [CHANGELOG](https://github.com/castlabs/dashas/blob/master/CHANGELOG.md) for changes history.
 
@@ -23,7 +23,7 @@ For more information visit [examples page](http://dashas.castlabs.com/demo/try.h
 
 ## Features
 
-~~* An OSMF extension;~~
+* ~~An OSMF extension;~~
 * Dash NetStream for Video/StageVideo class
 * Basic support for manifests with a list [1];
 * Basic support for manifests with a template [1];
@@ -32,13 +32,13 @@ For more information visit [examples page](http://dashas.castlabs.com/demo/try.h
 * Audio-video playback [3];
 * Adaptive bitrate streaming;
 * Live streaming;
-~~* User interface:~~
-	~~* Play/Pause;~~
-	~~* Seeking;~~
-	~~* Fullscreen mode;~~
-	~~* Duration;~~
-	~~* Loaded bytes indicator;~~
-	~~* Buffering indicator;~~
+* ~~User interface:~~
+	* ~~Play/Pause;~~
+	* ~~Seeking;~~
+	* ~~Fullscreen mode;~~
+	* ~~Duration;~~
+	* ~~Loaded bytes indicator;~~
+	* ~~Buffering indicator;~~
 
 [1] A server has to have [crossdomain.xml](https://github.com/castlabs/dashas/blob/master/utils/crossdomain.xml) file in the root context.  
 [2] A server has to have custom [.htaccess](https://github.com/castlabs/dashas/blob/master/utils/.htaccess) file in the root context.  
@@ -100,7 +100,7 @@ Finally try dash.as locally.
 
 #### Prerequisites
 
-* apache2 is installed;
+* apache2 is installed **or NGINX** compiled with module [ngx_http_bytes_filter_module](https://github.com/mjschutz/ngx_http_bytes_filter_module);
 
 #### Instructions
 
